@@ -37,6 +37,8 @@ class Projekat(bpy.types.Operator):
                         bpy.ops.mesh.convex_hull()
                         bpy.ops.object.editmode_toggle()
                         bpy.ops.transform.resize(value=(0.15, 0.15, 0.15), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+                        #bpy.ops.outliner.collection_new(nested=False)
+                        #bpy.ops.object.link_to_collection(collection_index=2)
                         bpy.ops.object.select_all(action='DESELECT')
                     elif file.endswith('.ply'):
                         bpy.ops.import_mesh.ply(filepath=path+file)
@@ -44,6 +46,8 @@ class Projekat(bpy.types.Operator):
                         bpy.ops.mesh.convex_hull()
                         bpy.ops.object.editmode_toggle()
                         bpy.ops.transform.resize(value=(0.15, 0.15, 0.15), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+                        #bpy.ops.outliner.collection_new(nested=False)
+                        #bpy.ops.object.link_to_collection(collection_index=2)
                         bpy.ops.object.select_all(action='DESELECT')
                     else:
                         print(file+' is not .xyz or .ply file')
@@ -57,8 +61,10 @@ class Projekat(bpy.types.Operator):
                             if line % 100 is 0:
                                 xyz = i.split()
                                 bpy.ops.mesh.primitive_cube_add(size=2, enter_editmode=False, location=(float(xyz[0]), float(xyz[1]), float(xyz[2])))
-                                print('100th coordinate: '+xyz[0]+','+xyz[1]+','+xyz[2])
+                                print('line number '+str(line)+': '+xyz[0]+','+xyz[1]+','+xyz[2])
                             line += 1
+                    bpy.ops.object.select_all(action='SELECT')
+                    bpy.ops.object.join()
                 elif path.endswith('.ply'):
                     print('ply file selected')
                     bpy.ops.import_mesh.ply(filepath=path+file)
